@@ -1,0 +1,50 @@
+version: "3"
+services:
+  mongodb:
+    image: mongo:4.4.6
+    restart: always
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_quiz_app:/data/db
+
+  mongo-express:
+    image: mongo-express:0.54
+    container_name: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongodb
+
+  quiz-app-server:
+    build: ./quiz-app-server
+    container_name: quiz-app-server
+    ports:
+      - 8082:8082
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URI: mongodb://root:root@mongodb:27017/quiz-app?authSource=admin
+    volumes:
+      - ./quiz-app-server:/app
+
+  quiz-app-client:
+    build: ./quiz-app-client
+    container_name: quiz-app-client
+    ports:
+      - 8080:8080
+    depends_on:
+      - quiz-app-server
+    volumes:
+      - ./quiz-app-client:/app
+
+volumes:
+  mongodb_quiz_app:
