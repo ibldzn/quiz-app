@@ -2,12 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  outline: 3px dotted red;
-}
-
 .main {
-  @apply w-screen h-screen;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #020230),
-    url("https://i.ytimg.com/vi/yQbJRGs0fy8/maxresdefault.jpg") center;
+  @apply w-screen h-screen text-white;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #020230),
+    url("https://i.ytimg.com/vi/yQbJRGs0fy8/maxresdefault.jpg");
+  background-size: cover;
 }

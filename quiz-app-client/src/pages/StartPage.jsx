@@ -22,7 +22,7 @@ const StartPage = ({ setUsername }) => {
   };
 
   return (
-    <div className="flex flex-col items-center w-fit justify-center">
+    <div className="flex flex-col items-center w-fit justify-center text-black">
       <input
         ref={inputRef}
         className="border-2 border-gray-300 p-2 rounded-lg"
