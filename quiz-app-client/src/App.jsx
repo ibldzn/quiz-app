@@ -6,6 +6,7 @@ import Trivia from "./components/Trivia";
 function App() {
   const [username, setUsername] = useState("");
   const [questions, setQuestions] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentPrizeIndex, setCurrentPrizeIndex] = useState(4);
 
   useEffect(() => {
@@ -32,10 +33,26 @@ function App() {
   return (
     <div className="flex w-screen h-screen">
       <div className="bg-millionaire bg-cover text-white w-full h-full p-4">
-        {questions?.length > 0 && <Trivia question={questions[4]} />}
+        {questions?.length > 0 && (
+          <Trivia question={questions[currentQuestionIndex]} />
+        )}
       </div>
       <aside className="w-1/5 bg-red-500 h-full">
         <div className="flex flex-col items-center justify-center">
+          <div className="flex items-center justify-around w-full p-2">
+            {/*button to decrement and increment currentQuestionIndex*/}
+            <button
+              onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
+            >
+              Previous
+            </button>
+            <button
+              onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
+            >
+              Next
+            </button>
+          </div>
+
           <Timer timeoutSec={5} onTimeout={() => console.log("Time out")} />
           {prizes.map((prize, index) => (
             <div
