@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import StartPage from "./pages/StartPage";
 import Timer from "./components/Timer";
+import Trivia from "./components/Trivia";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -16,7 +17,7 @@ function App() {
 
   if (!username) {
     return (
-      <div className="main">
+      <div className="bg-millionaire w-screen h-screen">
         <div className="flex items-center justify-center h-full">
           <StartPage setUsername={setUsername} />
         </div>
@@ -29,12 +30,12 @@ function App() {
   ].reverse();
 
   return (
-    <div className="flex">
-      <div className="main">
-        <div className="flex flex-col-reverse"></div>
+    <div className="flex w-screen h-screen">
+      <div className="bg-millionaire bg-cover text-white w-full p-4">
+        {questions?.length > 0 && <Trivia question={questions[4]} />}
       </div>
-      <aside className="w-1/4 bg-red-500">
-        <div className="flex flex-col items-center justify-center h-full">
+      <aside className="w-1/5 bg-red-500 h-full">
+        <div className="flex flex-col items-center justify-center">
           <Timer timeoutSec={5} onTimeout={() => console.log("Time out")} />
           {prizes.map((prize, index) => (
             <div
