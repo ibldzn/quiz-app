@@ -1,6 +1,6 @@
 const Trivia = ({ question }) => {
   return (
-    <div className="flex flex-col items-center justify-around h-1/2">
+    <div className="flex flex-col items-center justify-around h-full">
       <div className="bg-gradient-to-b from-[#100241] to-black p-8 border border-white rounded-xl">
         {question.question}
       </div>

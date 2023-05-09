@@ -31,7 +31,7 @@ function App() {
 
   return (
     <div className="flex w-screen h-screen">
-      <div className="bg-millionaire bg-cover text-white w-full p-4">
+      <div className="bg-millionaire bg-cover text-white w-full h-full p-4">
         {questions?.length > 0 && <Trivia question={questions[4]} />}
       </div>
       <aside className="w-1/5 bg-red-500 h-full">
