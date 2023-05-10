@@ -31,13 +31,13 @@ function App() {
   ].reverse();
 
   return (
-    <div className="flex w-screen h-screen">
-      <div className="bg-millionaire bg-cover text-white w-full h-full p-4">
+    <div className="flex w-screen h-screen text-white">
+      <div className="bg-millionaire bg-cover w-full h-full p-4">
         {questions?.length > 0 && (
           <Trivia question={questions[currentQuestionIndex]} />
         )}
       </div>
-      <aside className="w-1/5 bg-red-500 h-full">
+      <aside className="w-auto sm:w-1/5 h-full bg-[#020230]">
         <div className="flex flex-col items-center justify-center">
           <div className="flex items-center justify-around w-full p-2">
             {/*button to decrement and increment currentQuestionIndex*/}
@@ -58,7 +58,7 @@ function App() {
             <div
               key={prize}
               className={`flex items-center justify-center w-full p-2 ${
-                index === currentPrizeIndex && "bg-green-500"
+                index === currentPrizeIndex && "bg-teal-600"
               }`}
             >
               {prize}
