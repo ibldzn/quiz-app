@@ -5,7 +5,7 @@ const Trivia = ({ question }) => {
         <div className="w-64 h-64">
           <img
             src={question.image}
-            alt={question.question}
+            alt="Image"
             className="w-full h-full object-contain mb-4"
           />
         </div>
