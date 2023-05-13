@@ -14,12 +14,12 @@ const Trivia = ({ question }) => {
         <div className="h-full overflow-y-auto">{question.question}</div>
       </div>
       <div className="flex flex-wrap justify-center w-full">
-        {question.choices.map((choice) => (
+        {question.choices.map((choice, index) => (
           <div
             key={choice}
-            className="w-2/5 h-12 p-3 m-2 border border-white rounded-xl bg-gradient-to-b from-[#0e0124] to-[#22074d] font-light cursor-pointer text-center hover:bg-blue-500"
+            className="w-2/5 h-12 p-3 m-2 border border-white rounded-xl bg-gradient-to-t hover:bg-gradient-to-b from-[#0e0124] to-[#22074d] font-light cursor-pointer text-center relative overflow-hidden"
           >
-            <div className="h-full overflow-y-auto">{choice}</div>
+            <div className="h-full w-full overflow-y-auto">{choice}</div>
           </div>
         ))}
       </div>
