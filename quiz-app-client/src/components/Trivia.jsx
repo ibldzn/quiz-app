@@ -11,7 +11,7 @@ const Trivia = ({ question, setQuestionNumber, setTimeout, setPauseTimer }) => {
   const [playOpeningSound, { stop: stopOpeningSound }] = useSound("/play.mp3");
   const [playCorrectSound, { stop: stopCorrectSound }] =
     useSound("/correct.mp3");
-  const [playWrong, { stop: stopWrongSound }] = useSound("/wrong.mp3");
+  const [playWrongSound, { stop: stopWrongSound }] = useSound("/wrong.mp3");
 
   useEffect(() => {
     playOpeningSound();
@@ -33,21 +33,24 @@ const Trivia = ({ question, setQuestionNumber, setTimeout, setPauseTimer }) => {
     setSelectedChoice(choice);
     setSelectedChoiceClassName("choice active");
 
-    delay(3000, () =>
-      setSelectedChoiceClassName(`choice ${isCorrect ? "correct" : "wrong"}`)
-    );
+    delay(3000, () => {
+      setSelectedChoiceClassName(`choice ${isCorrect ? "correct" : "wrong"}`);
+      if (isCorrect) {
+        playCorrectSound();
+      } else {
+        playWrongSound();
+      }
+    });
 
     delay(5000, () => {
       if (isCorrect) {
-        playCorrectSound();
         delay(1000, () => {
           setQuestionNumber((prev) => prev + 1);
           setSelectedChoice(null);
           setPauseTimer(false);
         });
       } else {
-        playWrong();
-        delay(5000, () => {
+        delay(3000, () => {
           setTimeout(true);
         });
       }
