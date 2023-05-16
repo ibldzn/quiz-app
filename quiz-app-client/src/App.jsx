@@ -7,7 +7,7 @@ import GameOver from "./components/GameOver";
 function App() {
   const [username, setUsername] = useState("");
   const [questions, setQuestions] = useState([]);
-  const [questionNumber, setQuestionNumber] = useState(0);
+  const [questionNumber, setQuestionNumber] = useState(-1);
   const [currentPrizeIndex, setCurrentPrizeIndex] = useState(0);
   const [prizes, setPrizes] = useState([]);
   const activeDivPrize = useRef(null);
@@ -19,6 +19,8 @@ function App() {
       .then((res) => res.json())
       .then((data) => setQuestions(data))
       .catch(console.error);
+
+    setQuestionNumber(0);
   }, []);
 
   useEffect(() => {
@@ -41,6 +43,12 @@ function App() {
       }, 100);
     }
   }, [questionNumber, questions]);
+
+  useEffect(() => {
+    if (questionNumber > 0 && questionNumber === questions.length) {
+      setTimeout(true);
+    }
+  }, [questionNumber, questions, setTimeout]);
 
   if (!username) {
     return (
