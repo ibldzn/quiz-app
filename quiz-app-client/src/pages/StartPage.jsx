@@ -1,17 +1,13 @@
 import { useRef, useEffect } from "react";
+import useSound from "use-sound";
 
 const StartPage = ({ setUsername }) => {
-  const bgm = new Audio("/bgm.mp3");
+  const [playBGM, { stop }] = useSound("/bgm.mp3", { loop: true });
 
   useEffect(() => {
-    bgm.loop = true;
-    bgm.load();
-    bgm.play();
-
-    return () => {
-      bgm.pause();
-    };
-  }, []);
+    playBGM();
+    return () => stop();
+  }, [playBGM]);
 
   const inputRef = useRef();
 

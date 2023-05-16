@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import StartPage from "./pages/StartPage";
 import Timer from "./components/Timer";
 import Trivia from "./components/Trivia";
-import Modal from "./components/Modal";
+import GameOver from "./components/GameOver";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -56,15 +56,7 @@ function App() {
     <div className="flex w-screen h-screen text-white">
       <div className="bg-millionaire bg-cover w-full h-full p-4">
         {timeout ? (
-          <div className="flex flex-col items-center justify-center h-full">
-            <h1 className="text-4xl">You Earned ${prizes[questionNumber]}</h1>
-            <button
-              className="bg-white text-black px-4 py-2 rounded-md"
-              onClick={() => window.location.reload()}
-            >
-              Play Again
-            </button>
-          </div>
+          <GameOver earnedPrize={prizes[questionNumber]} />
         ) : (
           <>
             {questions?.length > 0 && (

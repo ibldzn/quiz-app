@@ -6,14 +6,24 @@ const delay = (ms, fn) => setTimeout(fn, ms);
 
 const Trivia = ({ question, setQuestionNumber, setTimeout, setPauseTimer }) => {
   const [selectedChoice, setSelectedChoice] = useState(null);
-  const [className, setClassName] = useState("choice");
-  const [playOpening] = useSound("/play.mp3");
-  const [playCorrect] = useSound("/correct.mp3");
-  const [playWrong] = useSound("/wrong.mp3");
+  const [selectedChoiceClassName, setSelectedChoiceClassName] =
+    useState("choice");
+  const [playOpeningSound, { stop: stopOpeningSound }] = useSound("/play.mp3");
+  const [playCorrectSound, { stop: stopCorrectSound }] =
+    useSound("/correct.mp3");
+  const [playWrong, { stop: stopWrongSound }] = useSound("/wrong.mp3");
 
   useEffect(() => {
-    playOpening();
-  }, [playOpening]);
+    playOpeningSound();
+    return () => stopOpeningSound();
+  }, [playOpeningSound]);
+
+  useEffect(() => {
+    return () => {
+      stopCorrectSound();
+      stopWrongSound();
+    };
+  }, [stopCorrectSound, stopWrongSound]);
 
   const handleClicked = (choice) => {
     setPauseTimer(true);
@@ -21,15 +31,15 @@ const Trivia = ({ question, setQuestionNumber, setTimeout, setPauseTimer }) => {
     const isCorrect = choice === question.choices[question.answer];
 
     setSelectedChoice(choice);
-    setClassName("choice active");
+    setSelectedChoiceClassName("choice active");
 
     delay(3000, () =>
-      setClassName(`choice ${isCorrect ? "correct" : "wrong"}`)
+      setSelectedChoiceClassName(`choice ${isCorrect ? "correct" : "wrong"}`)
     );
 
     delay(5000, () => {
       if (isCorrect) {
-        playCorrect();
+        playCorrectSound();
         delay(1000, () => {
           setQuestionNumber((prev) => prev + 1);
           setSelectedChoice(null);
@@ -37,7 +47,7 @@ const Trivia = ({ question, setQuestionNumber, setTimeout, setPauseTimer }) => {
         });
       } else {
         playWrong();
-        delay(1000, () => {
+        delay(5000, () => {
           setTimeout(true);
         });
       }
@@ -63,7 +73,9 @@ const Trivia = ({ question, setQuestionNumber, setTimeout, setPauseTimer }) => {
           <div
             key={choice}
             onClick={() => !selectedChoice && handleClicked(choice)}
-            className={selectedChoice === choice ? className : "choice"}
+            className={
+              selectedChoice === choice ? selectedChoiceClassName : "choice"
+            }
           >
             <div className="h-full w-full overflow-y-auto">{choice}</div>
           </div>
