@@ -1,4 +1,49 @@
-const Trivia = ({ question }) => {
+import useSound from "use-sound";
+import "./Trivia.css";
+import { useEffect, useRef, useState } from "react";
+
+const delay = (ms, fn) => setTimeout(fn, ms);
+
+const Trivia = ({ question, setQuestionNumber, setTimeout, setPauseTimer }) => {
+  const [selectedChoice, setSelectedChoice] = useState(null);
+  const [className, setClassName] = useState("choice");
+  const [playOpening] = useSound("/play.mp3");
+  const [playCorrect] = useSound("/correct.mp3");
+  const [playWrong] = useSound("/wrong.mp3");
+
+  useEffect(() => {
+    playOpening();
+  }, [playOpening]);
+
+  const handleClicked = (choice) => {
+    setPauseTimer(true);
+
+    const isCorrect = choice === question.choices[question.answer];
+
+    setSelectedChoice(choice);
+    setClassName("choice active");
+
+    delay(3000, () =>
+      setClassName(`choice ${isCorrect ? "correct" : "wrong"}`)
+    );
+
+    delay(5000, () => {
+      if (isCorrect) {
+        playCorrect();
+        delay(1000, () => {
+          setQuestionNumber((prev) => prev + 1);
+          setSelectedChoice(null);
+          setPauseTimer(false);
+        });
+      } else {
+        playWrong();
+        delay(1000, () => {
+          setTimeout(true);
+        });
+      }
+    });
+  };
+
   return (
     <div className="flex flex-col items-center justify-end h-full text-xl">
       {question.image && (
@@ -14,10 +59,11 @@ const Trivia = ({ question }) => {
         <div className="h-full overflow-y-auto">{question.question}</div>
       </div>
       <div className="flex flex-wrap justify-center w-full">
-        {question.choices.map((choice, index) => (
+        {question.choices.map((choice) => (
           <div
             key={choice}
-            className="w-2/5 h-12 p-3 m-2 border border-white rounded-xl bg-gradient-to-t hover:bg-gradient-to-b from-[#0e0124] to-[#22074d] font-light cursor-pointer text-center relative overflow-hidden"
+            onClick={() => !selectedChoice && handleClicked(choice)}
+            className={selectedChoice === choice ? className : "choice"}
           >
             <div className="h-full w-full overflow-y-auto">{choice}</div>
           </div>

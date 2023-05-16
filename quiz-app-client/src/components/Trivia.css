@@ -1,0 +1,50 @@
+.choice {
+  @apply w-2/5 h-12 p-3 m-2 border border-white rounded-xl bg-gradient-to-t from-[#0e0124] to-[#22074d] font-light cursor-pointer text-center transition-colors hover:bg-gradient-to-b;
+}
+
+.choice:hover,
+.choice.active {
+  @apply bg-gradient-to-b;
+}
+
+.choice.correct {
+  animation: correct 3s ease forwards;
+}
+
+.choice.wrong {
+  animation: wrong 3s ease forwards;
+}
+
+@keyframes correct {
+  0%,
+  22%,
+  42% {
+    background: mediumblue;
+  }
+  20%,
+  40%,
+  60% {
+    background: linear-gradient(#0e0124, #22074d);
+  }
+  62%,
+  100% {
+    background: green;
+  }
+}
+
+@keyframes wrong {
+  0%,
+  22%,
+  42% {
+    background: mediumblue;
+  }
+  20%,
+  40%,
+  60% {
+    background: linear-gradient(#0e0124, #22074d);
+  }
+  62%,
+  100% {
+    background: crimson;
+  }
+}
